@@ -8,7 +8,8 @@
         :value="item.value">
       </el-option>
     </el-select>
-    
+    <el-radio v-model="radio" label="1">备选项</el-radio>
+  <el-radio v-model="radio" label="2">备选项</el-radio>
     <div id="nav">
       <router-link to="/">index</router-link> |
       <router-link to="/login">login</router-link>
@@ -21,6 +22,7 @@
 export default {
   data() {
     return {
+      radio: 1,
       select: null,
       options:[
         {
@@ -33,7 +35,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
