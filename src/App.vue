@@ -1,22 +1,33 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-if="isRouterAlive"/>
   </div>
 </template>
 
 <script>
+import {roleRouter} from '@/router/router' // 引入要动态添加的路由
 export default {
   data() {
     return {
-      radio: 1,
-      select: null,
-      options:[
-        {
-          value: 1,
-          label: "测试"
-        }
-      ]
+      isRouterAlive: true
     }
+  },
+  provide() {
+        return {
+            reload: this.reload
+        };
+  },
+  methods: {
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(() => {
+        this.isRouterAlive = true;
+      })
+    }
+  },
+  created() {
+    this.$router.addRoutes(roleRouter)
+    this.$store.commit('SET_MenuList',roleRouter)
   }
 }
 </script>

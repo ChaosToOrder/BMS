@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="90px" height="90px" viewBox="0 0 90 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51 (57462) - http://www.bohemiancoding.com/sketch -->
+    <title>elementui (#409EFF) </title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="elementui-(#409EFF)-">
+            <rect fill="#FFFFFF" x="0" y="0" width="160" height="160"></rect>
+            <g id="Group-53" fill="#409EFF">
+                <rect id="Rectangle-Copy-102" x="0" y="0" width="90" height="90" rx="8"></rect>
+            </g>
+            <g id="element-ui-1" transform="translate(19.000000, 15.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                <path d="M46.0357305,26.1995876 L26.0001268,37.7493151 L26.0001268,45.0770397 L46.0357305,33.5273121 L46.0357305,26.1995876 Z M44.2604238,12.0964361 L26.0001268,22.6226093 L26.0001268,29.9503339 L49.7126442,16.2813483 L44.2604238,16.2813483 L44.2604238,12.0964361 Z M26.1269344,0 L0.126807618,14.8899342 L0,44.8900613 L25.8733192,60 L51.8731924,45.1103198 L52,15.1107009 L26.1269344,0 Z M26.3062404,7.11330909 L45.8264979,18.5136571 L45.730885,41.1482066 L26.1145073,52.381646 L6.59399615,40.981806 L6.68960909,18.3475106 L26.3062404,7.11330909 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

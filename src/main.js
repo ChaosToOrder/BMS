@@ -1,15 +1,16 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import './elementUI/elementUI.config.js'
-import axios from 'axios'
+import App from '@/App.vue'
+import router from '@/router/router'
+import store from '@/store/store'
+import '@/elementUI/elementUI.config.js'
 
+
+Vue.use(require('vue-cookies'))
 Vue.config.productionTip = false
-Vue.prototype.axios = axios
 
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+

@@ -23,7 +23,7 @@ export function passwordRE(rule, value, callback) {
 }
 export default {
     // 常用登录  6-16字母数字组合
-    logName: [{ required: true, validator: userNameRE, trigger: 'blur' }],
+    username: [{ required: true, validator: userNameRE, trigger: 'blur', }],
     // 常用密码  6-16字母数字组合
-    logPwd: [{ required: true, validator: passwordRE, trigger: 'blur' }]
+    password: [{ required: true, validator: passwordRE, trigger: 'blur' }]
 }
