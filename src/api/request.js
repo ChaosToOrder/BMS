@@ -29,35 +29,43 @@ service.interceptors.response.use(
         if (res.status == 200) {
             if (res.data.code === 0) {
                 if (res.data.msg) {
-                    Message({
-                        message: res.data.msg,
-                        type: 'success'
-                    });
+                    setTimeout(() => {
+                        Message({
+                            message: res.data.msg,
+                            type: 'success'
+                        });
+                    },400)
                 }
                 //请求成功
                 return Promise.resolve(res);
             } else if (res.data.code === 403 || res.data.code === 501 || res.data.code === 502) {
-                Message({
-                    message: res.data.msg,
-                    type: 'error'
-                });
-                router.push({ path: '/index', replace: true })
-                return Promise.reject(res);
-            } else if (res.data.code === -2) {
-                if (res.data.msg) {
+                setTimeout(() => {
                     Message({
                         message: res.data.msg,
                         type: 'error'
                     });
+                },400)
+                router.push({ path: '/index', replace: true })
+                return Promise.reject(res);
+            } else if (res.data.code === -2) {
+                if (res.data.msg) {
+                    setTimeout(() => {
+                        Message({
+                            message: res.data.msg,
+                            type: 'error'
+                        });
+                    },400)
                 }
                 router.push({ name: 'login', replace: true })
                 return Promise.reject(res);
             } else {
                 if (res.data.msg) {
-                    Message({
-                        message: res.data.msg,
-                        type: 'error'
-                    });
+                    setTimeout(() => {
+                        Message({
+                            message: res.data.msg,
+                            type: 'error'
+                        });
+                    },400)
                 }
                 NProgress.done()
                 return Promise.reject(res);
@@ -65,10 +73,12 @@ service.interceptors.response.use(
 
         } else {
             //报错
-            Message({
-                message: '出错啦~',
-                type: 'error'
-            });
+            setTimeout(() => {
+                Message({
+                    message: '出错啦~',
+                    type: 'error'
+                });
+            },400)
             NProgress.done()
             return Promise.reject(err);
         }
@@ -76,10 +86,12 @@ service.interceptors.response.use(
     },
     error => {
         //报错
-        Message({
-            message: '出错啦~',
-            type: 'error'
-        });
+        setTimeout(() => {
+            Message({
+                message: '出错啦~',
+                type: 'error'
+            });
+        },400)
         NProgress.done()
         return Promise.reject(error);
     }

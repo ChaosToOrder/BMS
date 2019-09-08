@@ -26,7 +26,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')" :loading="loading">登录</el-button>
               <el-button>忘记密码</el-button>
             </el-form-item>
           </el-form>
@@ -51,7 +51,8 @@ export default {
       rules,
       box: {
         position: 'center'
-      }
+      },
+      loading: false
     };
   },
   methods: {
@@ -60,9 +61,13 @@ export default {
       // 验证 正确回调 错误回调
       this.validate(formName)
         .then(() => {
+          this.loading = true
           this.$store.dispatch('login', this.form)
           .then((res) => {
-            this.$router.push({ name: 'home' })
+            setTimeout(() => {
+              this.loading = false
+              this.$router.push({ name: 'home' })
+            }, 400)
           })
           .catch((res) => {
             
@@ -111,6 +116,7 @@ export default {
       padding: 2.5rem 1.25rem;
       margin: auto;
       width: 50%;
+      text-align: center;
     }
   }
 }

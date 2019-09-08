@@ -8,7 +8,8 @@ export default {
         appName: '后台管理系统',
         menuList: [],
         ptitle: '',
-        title: ''
+        title: '',
+        uploadUrl: '/upload/'
     },
     getters: {
 

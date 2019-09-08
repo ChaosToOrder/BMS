@@ -25,7 +25,7 @@
                 :index=" item.path === '/'  ? `/${item2.path}` : `${item.path}/${item2.path}`"
                 :key="`${index}-${index2}`"
                 @click="jump(item.path,item2.path)"
-                v-if="JSON.stringify(item2.meta).indexOf('isShow') == -1 || item2.meta.isShow"
+                v-if="item2.show != 0"
               >{{item2.meta.title}}</el-menu-item>
             </el-menu-item-group>
           </template>

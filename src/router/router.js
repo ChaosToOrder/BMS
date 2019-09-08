@@ -8,7 +8,7 @@ let router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/admin/login.vue')
+      component: () => import('@/views/entry/login.vue')
     }
   ]
 })
@@ -26,7 +26,7 @@ export default router
  * 动态添加的路由
  * 用来和后端匹配
  */
-import System from './modules/system'
+// import System from './modules/system'
 import Users from './modules/users'
 export const roleRouter = [
   ...[
@@ -38,6 +38,6 @@ export const roleRouter = [
       meta: { title: '系统首页', ptitle: '' },
     },
   ],
-  ...System,
+  // ...System,
   ...Users
 ]

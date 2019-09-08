@@ -13,7 +13,7 @@
           <el-breadcrumb-item v-if="$store.state.title !== '' ">{{$store.state.title}}</el-breadcrumb-item>
         </el-breadcrumb>
         <div class="main">
-          <el-scrollbar>
+          <el-scrollbar ref="elscrollbar">
             <div class="main" :class="`${isHome ? '' : 'bg'}`">
               <transition name="move" mode="out-in">
                 <router-view></router-view>
@@ -30,8 +30,9 @@
 <script>
 import headerNav from "./headerNav";
 import leftMenu from "./leftMenu";
-import { mapGetters } from 'vuex'
-import api from '@/api/modules/user'
+import { mapGetters } from "vuex";
+import api from "@/api/modules/user";
+import Vue from "vue";
 export default {
   inject: ["reload"],
   data() {
@@ -42,13 +43,12 @@ export default {
   },
   methods: {},
   created() {
-    api.authentication()
-    .then(() => {
-      this.authentication = true
-    })
-    .catch(() => {
-      this.authentication = false
-    })
+    this.To_verify_identity(); // 验证身份
+    
+    /** 全局方法 */
+    Vue.prototype.$To_verify_identity = this.To_verify_identity
+    Vue.prototype.$scrollToTop = this.scrollToTop
+    Vue.prototype.$scrollToBottom = this.scrollToBottom
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -65,6 +65,33 @@ export default {
     $route(to, from) {
       this.$store.commit("SET_Ptitle", to.meta.ptitle || "");
       this.$store.commit("SET_Title", to.meta.title || "");
+    }
+  },
+  methods: {
+    // 验证身份
+    To_verify_identity() {
+      api
+        .authentication()
+        .then(() => {
+          this.authentication = true;
+        })
+        .catch(() => {
+          this.authentication = false;
+        });
+    },
+    // 内容区的滚动条到顶部
+    scrollToTop() {
+      let div = this.$refs["elscrollbar"].$refs["wrap"];
+      this.$nextTick(() => {
+        div.scrollTop = 0;
+      });
+    },
+    // 内容区的滚动条到底部
+    scrollToBottom() {
+      let div = this.$refs["elscrollbar"].$refs["wrap"];
+      this.$nextTick(() => {
+        div.scrollTop = div.scrollHeight;
+      });
     }
   },
   components: { headerNav, leftMenu }
@@ -88,12 +115,14 @@ export default {
 .el-aside {
   overflow: hidden !important;
 }
+// 内容区
 .main {
   overflow: hidden;
   flex: 1;
   background-color: #f5f5f5;
   .main {
-    margin: 10px;
+    border-top: 1px solid rgba(0,0,0,0);
+    margin: 50px 10px 50px 10px;
     box-sizing: border-box;
     &.bg {
       padding: 10px;
@@ -101,6 +130,7 @@ export default {
     }
   }
 }
+
 .el-main {
   color: #333;
   padding: 15px;
