@@ -1,4 +1,4 @@
-import api from "@/api/modules/user";
+import api from "@/api/modules/mall";
 /**
  * 列表
  */
@@ -13,11 +13,13 @@ let list = {
 
             /** 查询过滤 */
             filter: {
-                username: '',
-
+                goods_name: '',
+                categoryIdList: [], // 类别
                 pageSize: 10, // 页数
                 pageNum: 1, // 当前页
             },
+            /** 类别列表 */
+            categorySelection: [],
             /**查询抽屉配置参数 */
             filter_dialog: {
                 show: false,
@@ -40,7 +42,7 @@ let list = {
             getList() {
                 this.loading = true;
                 return new Promise((reslove, reject) => {
-                    api.getUsersList(this.filter).then(res => {
+                    api.getGoodsList(this.filter).then(res => {
                         setTimeout(() => {
                             this.loading = false;
                             if (res.data.code === 0) {
@@ -52,6 +54,14 @@ let list = {
                         }, 100);
                     });
                 })
+            },
+            /**
+             * 获取 商品类别 列表
+            */
+            getCategoryList() {
+                return api.getCategoryList({
+                    pageSize: 99999
+                });
             },
             /**
              * 打开抽屉
@@ -93,11 +103,12 @@ let list = {
              */
             clear_filter() {
                 let pageOption = {
-                    pageSize:this.filter.pageSize,
-                    pageNum:this.filter.pageNum,
+                    pageSize: this.filter.pageSize,
+                    pageNum: this.filter.pageNum,
                 }
                 this.filter = {
-                    username: '',
+                    goods_name: '', // 商品名
+                    categoryIdList: [], // 类别
                     ...pageOption
                 }
             }
@@ -116,7 +127,7 @@ let list = {
                 })
                     .then(() => {
                         this.loading = true;
-                        api.delUserById(item.user_id).then(res => {
+                        api.delGoodsById(item.goods_id).then(res => {
                             if (res.data.code === 0) {
                                 setTimeout(() => {
                                     this.getList();
@@ -149,10 +160,10 @@ let list = {
                 })
                     .then(() => {
                         let id_list = this.checkList.map((val) => {
-                            return val.user_id
+                            return val.goods_id
                         })
                         this.loading = true
-                        api.delUserMultiple({
+                        api.delGoodsMultiple({
                             id_list: id_list
                         })
                             .then((res) => {
@@ -172,18 +183,24 @@ let list = {
          * 编辑
          */
         edit(item) {
-              this.$router.push({
+            this.$router.push({
                 // 一定要写name,params必须用name来识别路径
                 // path: '/mall/addGiftCardType',
-                name: "admin_add&edit",
+                name: "goods_add&edit",
                 params: {
-                  data: item,
+                    data: item,
                 }
-              });
+            });
         },
     },
     created() {
         this.getList(); // 获取列表
+        this.getCategoryList() // 获取 类别列表
+        .then(res => {
+            if (res.data.code === 0) {
+                this.categorySelection = res.data.data.list;
+            }
+        })
     }
 };
 export default list

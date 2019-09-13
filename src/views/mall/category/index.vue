@@ -7,8 +7,8 @@
         <el-button
           type="primary"
           icon="el-icon-plus"
-          @click="$router.push({path:'/users/add&edit'})"
-        >新增管理员</el-button>
+          @click="$router.push({name:'category_add&edit'})"
+        >新增商品类别</el-button>
       </div>
       <!-- 按钮组 -->
       <div class="btn-group" style>
@@ -28,44 +28,31 @@
         :data="list"
         border
         style="width: 100%;"
-        row-key="user_id"
+        row-key="goods_category_id"
         @selection-change="handleSelectionChange"
         row-class-name="column"
       >
         <!-- ID -->
-        <el-table-column prop="user_id" label="ID" width="50"></el-table-column>
-        <!-- 用户名称 -->
-        <el-table-column prop="username" label="管理员名"></el-table-column>
-        <!-- 头像 -->
-        <el-table-column label="头像" width="80">
+        <el-table-column prop="goods_category_id" label="ID" width="50"></el-table-column>
+        <!-- 类别名 -->
+        <el-table-column prop="category_name" label="类别名"></el-table-column>
+        <!-- 说明 -->
+        <el-table-column prop="category_desc" label="说明"></el-table-column>
+        
+        <!-- 封面 -->
+        <el-table-column label="封面" width="80">
           <template slot-scope="scope" >
             <img
-              :src="item"
+              :src="scope.row.pic_url"
               style="margin-right:10px"
               width="50"
               height="50"
               alt
-              v-if="JSON.parse(scope.row.hp).length > 0"
-              v-for="(item,index) in JSON.parse(scope.row.hp)"
             />
           </template>
         </el-table-column>
-        <!-- 性别 -->
-        <el-table-column label="性别" width="80">
-          <template slot-scope="scope">
-            <span v-if="scope.row.sex == 1">男</span>
-            <span v-else>女</span>
-          </template>
-        </el-table-column>
-        <!-- 状态 -->
-        <el-table-column prop="state_flag" label="状态">
-          <template slot-scope="scope">
-            <span v-if="scope.row.state_flag == 0">正常</span>
-            <span v-else>禁用</span>
-          </template>
-        </el-table-column>
-        <!-- 注册时间 -->
-        <el-table-column prop="register_time" label="注册时间"></el-table-column>
+        <!-- 创建时间 -->
+        <el-table-column prop="create_time" label="创建时间"></el-table-column>
         <!-- 操作栏 -->
         <el-table-column fixed="right" label="操作" align="center" width="150">
           <template slot-scope="scope">
@@ -124,11 +111,11 @@
         :center="false"
       >
         <el-form :model="filter" ref="filterForm" label-width="auto" :hide-required-asterisk="true">
-          <el-form-item label="管理员名" prop="username">
+          <el-form-item label="类别名" prop="category_name">
             <el-input
-              v-model.trim="filter.username"
-              @keyup.enter.native="getList"
-              placeholder="要查询的管理员名"
+              v-model.trim="filter.category_name"
+              @keyup.enter.native="search"
+              placeholder="要查询的类别名"
             ></el-input>
           </el-form-item>
         </el-form>

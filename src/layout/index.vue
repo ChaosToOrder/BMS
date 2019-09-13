@@ -104,7 +104,7 @@ export default {
   flex-flow: column;
 }
 .el-footer {
-  background-color: #409eff;
+  background-color: #409EFF;
   color: #fff;
   text-align: center;
   line-height: 35px;

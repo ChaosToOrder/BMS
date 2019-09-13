@@ -1,4 +1,4 @@
-import api from "@/api/modules/user";
+import api from "@/api/modules/mall";
 /**
  * 列表
  */
@@ -13,7 +13,7 @@ let list = {
 
             /** 查询过滤 */
             filter: {
-                username: '',
+                category_name: '',
 
                 pageSize: 10, // 页数
                 pageNum: 1, // 当前页
@@ -40,7 +40,7 @@ let list = {
             getList() {
                 this.loading = true;
                 return new Promise((reslove, reject) => {
-                    api.getUsersList(this.filter).then(res => {
+                    api.getCategoryList(this.filter).then(res => {
                         setTimeout(() => {
                             this.loading = false;
                             if (res.data.code === 0) {
@@ -97,7 +97,7 @@ let list = {
                     pageNum:this.filter.pageNum,
                 }
                 this.filter = {
-                    username: '',
+                    category_name: '',
                     ...pageOption
                 }
             }
@@ -116,7 +116,7 @@ let list = {
                 })
                     .then(() => {
                         this.loading = true;
-                        api.delUserById(item.user_id).then(res => {
+                        api.delCategoryById(item.goods_category_id).then(res => {
                             if (res.data.code === 0) {
                                 setTimeout(() => {
                                     this.getList();
@@ -149,10 +149,10 @@ let list = {
                 })
                     .then(() => {
                         let id_list = this.checkList.map((val) => {
-                            return val.user_id
+                            return val.goods_category_id
                         })
                         this.loading = true
-                        api.delUserMultiple({
+                        api.delCategoryMultiple({
                             id_list: id_list
                         })
                             .then((res) => {
@@ -175,7 +175,7 @@ let list = {
               this.$router.push({
                 // 一定要写name,params必须用name来识别路径
                 // path: '/mall/addGiftCardType',
-                name: "admin_add&edit",
+                name: "category_add&edit",
                 params: {
                   data: item,
                 }

@@ -114,6 +114,9 @@ export default {
   // 按钮组
   .btn-group {
     margin-left: 40px;
+    button:last-child {
+      margin-right: 15px;
+    }
   }
 }
 </style>
@@ -159,6 +162,17 @@ export default {
 <style lang="scss">
 /* elemntUI 样式修改 */
 #app {
+
+  
 }
+
+// 下拉框 
+.el-select-dropdown__list{
+  // 选项
+  .el-select-dropdown__item:last-child {
+      margin-bottom: 15px;
+  }
+}
+  
 </style>
 

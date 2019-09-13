@@ -28,6 +28,7 @@ export default router
  */
 // import System from './modules/system'
 import Users from './modules/users'
+import Mall from './modules/mall'
 export const roleRouter = [
   ...[
     {
@@ -39,5 +40,6 @@ export const roleRouter = [
     },
   ],
   // ...System,
-  ...Users
+  ...Users,
+  ...Mall,
 ]

@@ -9,39 +9,24 @@
           <div class="area">
             <div class="title">基本信息</div>
 
-            <!-- 管理员名 -->
-            <el-form-item label="管理员名" prop="username">
-              <el-input v-model="form.username" placeholder="管理员名"></el-input>
+            <!-- 商品类别名 -->
+            <el-form-item label="商品类别名" prop="category_name">
+              <el-input v-model="form.category_name" placeholder="商品类别名"></el-input>
             </el-form-item>
 
-            <!-- 密码 -->
-            <el-form-item label="密码" prop="password">
-              <el-input type="password" v-model="form.password" placeholder="密码"></el-input>
+            <!-- 描述 -->
+            <el-form-item label="描述" prop="category_desc">
+              <el-input type="textarea" :rows="3" v-model="form.category_desc" placeholder="描述"></el-input>
             </el-form-item>
 
-            <!-- 性别 -->
-            <el-form-item label="性别" prop="sex">
-              <el-radio-group v-model="form.sex">
-                <el-radio :label="1">男</el-radio>
-                <el-radio :label="0">女</el-radio>
-              </el-radio-group>
-            </el-form-item>
-
-            <!-- 状态 -->
-            <el-form-item label="状态" prop="sex">
-              <el-radio-group v-model="form.state_flag">
-                <el-radio label="0">正常</el-radio>
-                <el-radio label="1">禁用</el-radio>
-              </el-radio-group>
-            </el-form-item>
           </div>
         </el-col>
         <el-col :span="8">
           <div class="area">
-            <div class="title">头像上传</div>
+            <div class="title">图片上传</div>
 
             <!-- 上传封面 -->
-            <el-form-item label="头像">
+            <el-form-item label="封面">
               <el-upload
                 :action="serverUrl"
                 list-type="picture-card"
@@ -85,12 +70,11 @@
 </template>
 <script>
 // import api from "@/api/modules/mall";
-import api from "@/api/modules/user";
+import api from "@/api/modules/mall";
 import uploadApi from "@/api/modules/upload.js";
-import rules from "@/elementUI/rules/user.js";
+import rules from "@/elementUI/rules/mall/goods.js";
 import upload from "./mixins/upload";
 import { Form } from "element-ui";
-import { Promise } from "q";
 
 // 分类器
 function classification(res) {
@@ -129,10 +113,8 @@ export default {
       loading: false, // 组件加载用
       /** 表单 */
       form: {
-        username: "",
-        password: "",
-        sex: 1,
-        state_flag: '0'
+        category_name: "",
+        category_desc: "",
       },
       rules
     };
@@ -144,7 +126,7 @@ export default {
     // 页面为编辑页面
     editPage() {
       let data = this.$route.params.data;
-      return data && data.user_id;
+      return data && data.goods_category_id;
     }
   },
   methods: {
@@ -152,16 +134,29 @@ export default {
      * 表单初始化
      */
     init() {
-      let data = this.$route.params.data;
-
+      
       if (this.editPage) {
+        let data = this.$route.params.data;
         this.form = data;
-        this.showList = JSON.parse(data.hp).map((val, index) => {
-          return {
-            url: val,
-            index: index
-          };
-        });
+
+        //+ 封面
+        let pic_url = data.pic_url;
+        if (Array.isArray(pic_url)) {
+          this.showList = JSON.parse(pic_url).map((val, index) => {
+            return {
+              url: val,
+              index: index
+            };
+          });
+        } else if (typeof pic_url == "string") {
+          this.showList = [
+            {
+              url: pic_url,
+              index: 0
+            }
+          ];
+        }
+
       }
     },
     /**
@@ -171,9 +166,9 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.editPage) {
-            this.edit(formName); // 编辑管理员
+            this.edit(formName); // 编辑
           } else {
-            this.add(formName); // 添加管理员
+            this.add(formName); // 添加
           }
         } else {
           return false;
@@ -184,11 +179,11 @@ export default {
      * 添加
      */
     add(formName) {
-      // 头像图片
+      // 封面图片
       let promises = this.fileList.map(val => {
         let formData = new FormData();
         formData.append("file", val);
-        formData.append("type", "hp");
+        formData.append("type", "pic_url");
         return uploadApi.uploadPic(formData);
       });
 
@@ -198,15 +193,15 @@ export default {
         let classifier = classification(res); // 将返回的图片地址 分类
 
         api
-          .add_edit_user({
+          .add_edit_category({
             ...this[formName],
-            ...classifier
+            ...classifier,
           })
           .then(res => {
             if (res.data.code === 0) {
               setTimeout(() => {
                 this.$router.push({
-                  name: "admin"
+                  name: "category"
                 });
               }, 300);
             }
@@ -222,11 +217,11 @@ export default {
       let promises = this.fileList.map(val => {
         let formData = new FormData();
         formData.append("file", val);
-        formData.append("type", "hp");
+        formData.append("type", "pic_url");
         return uploadApi.uploadPic(formData);
       });
 
-      let allPromises = promises.concat([]); // 可在此增加要传输的文件列表
+      let allPromises = promises.concat([]); //+ 可在此增加要传输的文件列表
 
       Promise.all(allPromises).then(res => {
         let classifier = classification(res); // 将返回的图片地址 分类
@@ -234,15 +229,15 @@ export default {
           return val.url;
         });
 
-        // 头像
-        if (classifier.hp) {
-          classifier.hp = list.concat(classifier.hp);
+        //+ 头像
+        if (classifier.pic_url) {
+          classifier.pic_url = list.concat(classifier.pic_url);
         } else {
-          classifier.hp = list;
+          classifier.pic_url = list;
         }
 
         api
-          .add_edit_user({
+          .add_edit_category({
             ...this[formName],
             ...classifier
           })
@@ -250,7 +245,7 @@ export default {
             if (res.data.code === 0) {
               setTimeout(() => {
                 this.$router.push({
-                  name: "admin"
+                  name: "category"
                 });
               }, 300);
             }
