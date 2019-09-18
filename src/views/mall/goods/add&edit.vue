@@ -15,13 +15,18 @@
             </el-form-item>
 
             <!-- 原价 -->
-            <el-form-item label="原价" prop="original_price">
-              <el-input type="number" v-model="form.original_price" placeholder="原价"></el-input>
+            <el-form-item label="商品原价" prop="original_price">
+              <el-input type="number" :min="0"  v-model="form.original_price" placeholder="商品原价"></el-input>
             </el-form-item>
 
             <!-- 邮费 -->
             <el-form-item label="邮费" prop="postage">
               <el-input type="number" :min="0" v-model="form.postage" placeholder="邮费"></el-input>
+            </el-form-item>
+
+            <!-- 虚拟销量 -->
+            <el-form-item label="虚拟销量" prop="sales_volume">
+              <el-input type="number" :min="0" v-model="form.sales_volume" placeholder="虚拟销量"></el-input>
             </el-form-item>
 
             <!-- 商品类别 -->

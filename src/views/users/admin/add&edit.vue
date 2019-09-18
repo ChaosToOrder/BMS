@@ -30,8 +30,8 @@
             <!-- 状态 -->
             <el-form-item label="状态" prop="sex">
               <el-radio-group v-model="form.state_flag">
-                <el-radio label="0">正常</el-radio>
-                <el-radio label="1">禁用</el-radio>
+                <el-radio :label="0">正常</el-radio>
+                <el-radio :label="1">禁用</el-radio>
               </el-radio-group>
             </el-form-item>
           </div>
@@ -132,7 +132,7 @@ export default {
         username: "",
         password: "",
         sex: 1,
-        state_flag: '0'
+        state_flag: 0
       },
       rules
     };
