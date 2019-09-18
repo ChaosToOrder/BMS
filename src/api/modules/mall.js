@@ -1,5 +1,5 @@
 import request from '../request'
-const baseUrl = '/mall/'
+const baseUrl = '/article/'
 
 export default{
     /** --- 商品 --- */
@@ -8,7 +8,7 @@ export default{
      */
     getGoodsList(data) {
         return request({
-            url:`${baseUrl}goods/list/page`,
+            url:`${baseUrl}/article/list/page`,
             method:'post',
             data:data
         })
@@ -16,21 +16,21 @@ export default{
     /**
      * 根据ID删除商品
      */
-    delGoodsById(goods_id) {
+    delArticleById(article_id) {
         return request({
-            url:`${baseUrl}goods/delete`,
+            url:`${baseUrl}article/delete`,
             method:'post',
             data:{
-                goods_id: goods_id
+                article_id: article_id
             }
         })
     },
     /**
      * 批量删除商品
      */
-    delGoodsMultiple(data) {
+    delArticleMultiple(data) {
         return request({
-            url:`${baseUrl}goods/delete/multiple`,
+            url:`${baseUrl}article/delete/multiple`,
             method:'post',
             data:data
         })
@@ -40,7 +40,7 @@ export default{
      */
     add_edit_goods(data) {
         return request({
-            url:`${baseUrl}goods/add&edit`,
+            url:`${baseUrl}article/add&edit`,
             method:'post',
             data:data
         })
@@ -51,7 +51,7 @@ export default{
      */
     getCategoryList(data) {
         return request({
-            url:`${baseUrl}category/list/page`,
+            url:`${baseUrl}type/list/page`,
             method:'get',
             params:data
         })
@@ -61,7 +61,7 @@ export default{
      */
     delCategoryById(goods_category_id) {
         return request({
-            url:`${baseUrl}category/delete`,
+            url:`${baseUrl}type/delete`,
             method:'post',
             data:{
                 goods_category_id: goods_category_id
@@ -73,7 +73,7 @@ export default{
      */
     delCategoryMultiple(data) {
         return request({
-            url:`${baseUrl}category/delete/multiple`,
+            url:`${baseUrl}type/delete/multiple`,
             method:'post',
             data:data
         })
@@ -83,7 +83,7 @@ export default{
      */
     add_edit_category(data) {
         return request({
-            url:`${baseUrl}category/add&edit`,
+            url:`${baseUrl}type/add&edit`,
             method:'post',
             data:data
         })

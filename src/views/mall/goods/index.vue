@@ -8,7 +8,7 @@
           type="primary"
           icon="el-icon-plus"
           @click="$router.push({path:'/mall/add&edit'})"
-        >新增商品</el-button>
+        >新增文章</el-button>
       </div>
       <!-- 按钮组 -->
       <div class="btn-group" style>
@@ -28,20 +28,18 @@
         :data="list"
         border
         style="width: 100%;"
-        row-key="goods_id"
+        row-key="article_id"
         @selection-change="handleSelectionChange"
         row-class-name="column"
       >
         <!-- ID -->
-        <el-table-column prop="goods_id" label="ID" width="50"></el-table-column>
-        <!-- 商品名 -->
-        <el-table-column prop="goods_name" label="商品名"></el-table-column>
-        <!-- 原价 -->
-        <el-table-column prop="original_price" label="原价"></el-table-column>
+        <el-table-column prop="article_id" label="ID" width="50"></el-table-column>
+        <!-- 文章名 -->
+        <el-table-column prop="title" label="文章标题"></el-table-column>
         <!-- 类别 -->
-        <el-table-column prop="category_name" label="类别"></el-table-column>
+        <el-table-column prop="type_name" label="文章类型"></el-table-column>
         <!-- 封面 -->
-        <el-table-column label="头像" width="80">
+        <el-table-column label="封面图" width="80">
           <template slot-scope="scope">
             <img :src="scope.row.pic_url" style="margin-right:10px" width="50" height="50" alt />
           </template>
@@ -106,28 +104,28 @@
         :center="false"
       >
         <el-form :model="filter" ref="filterForm" label-width="auto" :hide-required-asterisk="true">
-          <!-- 商品名 -->
-          <el-form-item label="商品名" prop="goods_name">
+          <!-- 文章名 -->
+          <el-form-item label="文章名" prop="title">
             <el-input
-              v-model.trim="filter.goods_name"
+              v-model.trim="filter.title"
               @keyup.enter.native="search"
-              placeholder="要查询的商品名"
+              placeholder="要查询的文章名"
             ></el-input>
           </el-form-item>
-          <!-- 商品类别 -->
-          <el-form-item label="商品类别" prop="category_id">
+          <!-- 文章类别 -->
+          <el-form-item label="文章类别" prop="category_id">
             <el-select
-              v-model="filter.categoryIdList"
+              v-model="filter.typeIdList"
               @change="search"
               clearable
-              placeholder="商品类别"
+              placeholder="文章类别"
               multiple
             >
               <el-option
                 v-for="item in categorySelection"
-                :key="item.goods_category_id"
-                :label="item.category_name"
-                :value="item.goods_category_id"
+                :key="item.type_id"
+                :label="item.type_name"
+                :value="item.type_id"
               ></el-option>
             </el-select>
           </el-form-item>

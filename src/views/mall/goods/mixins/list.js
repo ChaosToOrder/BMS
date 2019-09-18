@@ -13,8 +13,8 @@ let list = {
 
             /** 查询过滤 */
             filter: {
-                goods_name: '',
-                categoryIdList: [], // 类别
+                article_name: '',
+                typeIdList: [], // 类别
                 pageSize: 10, // 页数
                 pageNum: 1, // 当前页
             },
@@ -107,8 +107,8 @@ let list = {
                     pageNum: this.filter.pageNum,
                 }
                 this.filter = {
-                    goods_name: '', // 商品名
-                    categoryIdList: [], // 类别
+                    article_name: '', // 商品名
+                    typeIdList: [], // 类别
                     ...pageOption
                 }
             }
@@ -127,7 +127,7 @@ let list = {
                 })
                     .then(() => {
                         this.loading = true;
-                        api.delGoodsById(item.goods_id).then(res => {
+                        api.delArticleById(item.article_id).then(res => {
                             if (res.data.code === 0) {
                                 setTimeout(() => {
                                     this.getList();
@@ -160,10 +160,10 @@ let list = {
                 })
                     .then(() => {
                         let id_list = this.checkList.map((val) => {
-                            return val.goods_id
+                            return val.article_id
                         })
                         this.loading = true
-                        api.delGoodsMultiple({
+                        api.delArticleMultiple({
                             id_list: id_list
                         })
                             .then((res) => {
@@ -186,7 +186,7 @@ let list = {
             this.$router.push({
                 // 一定要写name,params必须用name来识别路径
                 // path: '/mall/addGiftCardType',
-                name: "goods_add&edit",
+                name: "article_add&edit",
                 params: {
                     data: item,
                 }
