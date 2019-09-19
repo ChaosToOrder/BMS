@@ -84,7 +84,7 @@
   </div>
 </template>
 <script>
-// import api from "@/api/modules/mall";
+// import api from "@/api/modules/article";
 import api from "@/api/modules/user";
 import uploadApi from "@/api/modules/upload.js";
 import rules from "@/elementUI/rules/user.js";
